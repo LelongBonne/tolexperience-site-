@@ -1,20 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOLExperience - Site en maintenance</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TOLExperience — Site en maintenance</title>
+  <style>
+    /* === Polices TOL (déposez vos fichiers dans /fonts avec ces noms exacts) === */
+    @font-face {
+      font-family: "TOLArial3";
+      src: url("fonts/TOL-Arial3Gras-SVG.otf") format("opentype");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "TOL-RV1";
+      src: url("fonts/TOLRV1.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "TOLArial4";
+      src: url("fonts/TOL-Arial4Light.otf") format("opentype");
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root{
+      --blue:#005e83; /* RAL 5019 Bleu*/
+      --red:#a63d2f;  /* RAL 3016 Rouge*/
+      --grey:#383e42; /* RAL 7016 Gris Foncé*/
+      --muted:#c8c8c7; /* RAL 7047 Gris Clair*/
+    }
+    html,body{margin:0;padding:0;background:#fff;color:var(--grey);font-family:Arial, Helvetica, sans-serif}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+    .card{max-width:980px;width:100%;text-align:center}
+    /* Logo au-dessus du titre */
+    .logo{display:block;margin:0 auto 12px auto;max-width:420px;width:90%;height:auto}
+    /* Ligne 1 : TOLArial3 */
+    h1{
+      font-family:"TOLArial3", Arial, Helvetica, sans-serif;
+      font-size:clamp(20px,4.6vw,40px);
+      margin:8px 0 18px;
+      color:var(--blue);
+      font-weight:700;
+      letter-spacing:.5px;
+    }
+    h1 .L{color:var(--red)} /* L majuscule en rouge */
+    /* Ligne 2 : TOL-RV1 (plus petite) */
+    .note{
+      font-family:"TOL-RV1", "Comic Sans MS", "Segoe Script", cursive;
+      font-size:clamp(10px,2.6vw,20px);
+      line-height:1.25;
+      margin:6px 0 22px;
+      color:var(--grey);
+    }
+    /* Coordonnées : texte en TOLArial4, labels en TOLArial3 */
+    .contact{
+      font-family:"TOLArial4", Arial, Helvetica, sans-serif;
+      font-size:clamp(16px,2.1vw,22px);
+      margin-top:6px;
+    }
+    .label{
+      font-family:"TOLArial3", Arial, Helvetica, sans-serif;
+      color:var(--grey); 
+      font-weight:700;
+    }
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <img src="logo1.svg" alt="TOLExperience Logo" class="logo">
-        <h1>Notre site est en maintenance</h1>
-        <p>Nous préparons quelque chose de spécial pour vous. Revenez bientôt !</p>
-        <div class="contact">
-            <p><strong>Email :</strong> <a href="mailto:etudes@tolexperience.com">etudes@tolexperience.com</a></p>
-            <p><strong>Téléphone :</strong> <a href="tel:+33623073881">06 23 07 38 81</a></p>
-        </div>
-    </div>
+  <main class="wrap">
+    <section class="card" aria-label="Annonce maintenance">
+      <!-- Logo provenant de votre ancien fichier -->
+      <img src="logo1.svg" alt="TOLExperience Logo" class="logo">
+      <h1><span class="L">L</span>e site est actuellement en maintenance...</h1>
+      <p class="note">Nous préparons quelque chose de spécial pour vous.<br>Revenez bientôt 🙂!</p>
+      <div class="contact">
+        <p><span class="label">Email :</span> <a href="mailto:contact@tolexperience.com">contact@tolexperience.com</a></p>
+        <p><span class="label">Téléphone :</span> <a href="tel:+33623073881">06&nbsp;23&nbsp;07&nbsp;38&nbsp;81</a></p>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
