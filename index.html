@@ -1,166 +1,195 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="auto">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- évite les stylisations auto des numéros de tel -->
   <meta name="format-detection" content="telephone=no">
-  <meta name="color-scheme" content="light">
+  <!-- indique qu’on gère nous-mêmes clair & sombre -->
+  <meta name="color-scheme" content="light dark">
   <title>TOLExperience — Site en maintenance</title>
   <style>
-    /* === Polices TOL (déposez vos fichiers dans /fonts avec ces noms exacts) === */
+    /* === Polices TOL (dépose tes fichiers dans /fonts) === */
     @font-face {
       font-family: "TOLArial3";
       src: url("fonts/TOL-Arial3Gras-SVG.otf") format("opentype");
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
+      font-weight: 700; font-style: normal; font-display: swap;
     }
     @font-face {
       font-family: "TOL-RV1";
       src: url("fonts/TOLRV1.ttf") format("truetype");
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
+      font-weight: 400; font-style: normal; font-display: swap;
     }
     @font-face {
       font-family: "TOLArial4";
       src: url("fonts/TOL-Arial4Light.otf") format("opentype");
-      font-weight: 300;
-      font-style: normal;
-      font-display: swap;
+      font-weight: 300; font-style: normal; font-display: swap;
     }
 
+    /* ====== Couleurs de marque (figées) ====== */
     :root{
-      --blue:#005e83;  /* RAL 5019 Bleu */
-      --red:#a63d2f;   /* RAL 3016 Rouge */
-      --grey:#383e42;  /* RAL 7016 Gris Foncé */
-      --muted:#c8c8c7; /* RAL 7047 Gris Clair */
+      --brand-blue:#005e83; /* RAL 5019  ➜ NE CHANGE JAMAIS */
+      --brand-red:#a63d2f;  /* RAL 3016  ➜ NE CHANGE JAMAIS */
+
+      /* Thème clair par défaut (neutres) */
+      --bg:#ffffff;
+      --text:#383e42;      /* RAL 7016 */
+      --muted:#c8c8c7;     /* RAL 7047 */
+
+      /* éléments */
+      --card-max:980px;
+      --radius:18px;
     }
 
-    /* Empêche l'auto-darkening/recoloration sur Android/Samsung */
-    html {
+    /* ====== Thèmes (neutres uniquement) ====== */
+    /* clair explicite */
+    [data-theme="light"]{
       color-scheme: light;
-      forced-color-adjust: none;
+      --bg:#ffffff;
+      --text:#383e42;   /* gris foncé */
     }
-    body {
-      margin:0; padding:0; background:#fff; color:var(--grey);
+    /* sombre explicite */
+    [data-theme="dark"]{
+      color-scheme: dark;
+      --bg:#0e1012;     /* fond sombre neutre */
+      --text:#c8c8c7;   /* gris clair */
+    }
+    /* auto = respecte le système, mais nos couleurs de marque restent figées */
+    @media (prefers-color-scheme: dark){
+      [data-theme="auto"]{
+        color-scheme: dark;
+        --bg:#0e1012;
+        --text:#c8c8c7;
+      }
+    }
+
+    /* ====== Reset & layout ====== */
+    html,body{
+      margin:0; padding:0;
+      background:var(--bg);
+      color:var(--text);
       font-family:Arial, Helvetica, sans-serif;
       -webkit-text-size-adjust:100%;
     }
-    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
-    .card{max-width:980px;width:100%;text-align:center}
+    /* Empêche les recolorisations forcées de certains navigateurs */
+    body, * { forced-color-adjust: none; }
 
-    /* Logo au-dessus du titre */
-    .logo{display:block;margin:0 auto 12px auto;max-width:420px;width:90%;height:auto}
+    .wrap{
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      padding:28px;
+    }
+    .card{
+      max-width:var(--card-max); width:100%; text-align:center; margin-inline:auto;
+    }
 
-    /* Ligne 1 : TOLArial3 */
+    /* Logo */
+    .logo{display:block; margin:0 auto 12px auto; max-width:420px; width:90%; height:auto}
+
+    /* Titre */
     h1{
       font-family:"TOLArial3", Arial, Helvetica, sans-serif;
       font-size:clamp(20px,4.6vw,40px);
       margin:8px 0 18px;
-      color:var(--blue);
-      font-weight:700;
-      letter-spacing:.5px;
-      forced-color-adjust: none;
+      color:var(--brand-blue) !important;
+      font-weight:700; letter-spacing:.5px;
+      -webkit-text-fill-color:var(--brand-blue) !important;
     }
-    h1 .L{color:var(--red)} /* L majuscule en rouge */
+    h1 .L{color:var(--brand-red) !important; -webkit-text-fill-color:var(--brand-red) !important;}
 
-    /* Ligne 2 : TOL-RV1 (plus petite) */
+    /* Ligne manuscrite */
     .note{
-      font-family:"TOL-RV1", "Comic Sans MS", "Segoe Script", cursive;
+      font-family:"TOL-RV1","Comic Sans MS","Segoe Script",cursive;
       font-size:clamp(10px,2.6vw,20px);
-      line-height:1.25;
-      margin:6px 0 22px;
-      color:var(--grey);
-      forced-color-adjust: none;
+      line-height:1.25; margin:6px 0 22px; color:var(--text);
     }
 
-    /* Coordonnées : texte en TOLArial4, labels en TOLArial3 */
+    /* Coordonnées */
     .contact{
       font-family:"TOLArial4", Arial, Helvetica, sans-serif;
       font-size:clamp(16px,2.1vw,22px);
       margin-top:6px;
-      forced-color-adjust: none;
     }
     .label{
       font-family:"TOLArial3", Arial, Helvetica, sans-serif;
-      color:var(--grey);
-      font-weight:700;
-      forced-color-adjust: none;
+      color:var(--text); font-weight:700;
     }
 
-    /* Liens : forcer la couleur de marque par défaut */
-    a, a:link, a:visited, a:active, a:hover {
-      color: var(--blue) !important;
-      text-decoration: underline;
-      -webkit-text-fill-color: var(--blue);
-      forced-color-adjust: none;
+    /* Liens : BLEU de marque, figé partout */
+    a,a:link,a:visited,a:active,a:hover,
+    a[href^="mailto:"],a[href^="tel:"],a[x-apple-data-detectors]{
+      color:var(--brand-blue) !important;
+      -webkit-text-fill-color:var(--brand-blue) !important;
+      text-decoration:underline;
     }
 
-    /* ↓ Ajustements uniquement pour smartphone */
-    @media (max-width: 480px) {
-      .wrap { padding:16px; }
-      .card { max-width:92vw; }
-      .logo { max-width:220px; margin-bottom:8px; }
-      h1 {
-        font-size: clamp(16px, 6vw, 22px);
-        line-height: 1.15;
-        margin: 6px 0 10px;
-      }
-      .note {
-        font-size: clamp(12px, 4.6vw, 16px);
-        line-height: 1.22;
-        margin: 6px 0 14px;
-      }
-      .contact {
-        font-size: clamp(13px, 3.8vw, 16px);
-      }
-      .label { font-size: 1em; } /* même taille que .contact */
+    /* Bouton thème */
+    .theme-switch{
+      position:fixed; top:12px; right:12px;
+      border:1px solid var(--muted);
+      background:transparent; color:var(--text);
+      padding:6px 10px; border-radius:999px; cursor:pointer;
+      font-family:"TOLArial4", Arial, sans-serif; font-size:14px;
     }
 
-    /* Très petits écrans (optionnel) */
-    @media (max-width: 360px) {
-      .logo { max-width:190px; }
-      h1   { font-size:20px; }
-      .note{ font-size:14px; }
-      .contact { font-size:13px; }
+    /* Responsive smartphone */
+    @media (max-width:480px){
+      .wrap{padding:16px}
+      .logo{max-width:220px; margin-bottom:8px}
+      h1{font-size:clamp(16px,6vw,22px); line-height:1.15; margin:6px 0 10px}
+      .note{font-size:clamp(12px,4.6vw,16px); line-height:1.22; margin:6px 0 14px}
+      .contact{font-size:clamp(13px,3.8vw,16px)}
+      .label{font-size:1em}
     }
-
-    /* ↓ Smartphone + mode sombre : SEUL le gris s'éclaircit.
-       On fige les couleurs de marque et on neutralise le "jaune" des liens. */
-    @media (prefers-color-scheme: dark) and (max-width: 480px) {
-      body, .note, .contact, .label {
-        color: #c8c8c7 !important;             /* RAL 7047 */
-        -webkit-text-fill-color: #c8c8c7 !important;
-      }
-      h1 { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; }
-      h1 .L { color: var(--red) !important; -webkit-text-fill-color: var(--red) !important; }
-
-      a, a:link, a:visited, a:active, a:hover,
-      a[href^="mailto:"], a[href^="tel:"], a[x-apple-data-detectors] {
-        color: var(--blue) !important;
-        -webkit-text-fill-color: var(--blue) !important;
-        text-decoration: underline;
-      }
-
-      /* Re-confirme au navigateur que la page est prévue claire */
-      html { color-scheme: light; }
+    @media (max-width:360px){
+      .logo{max-width:190px}
+      h1{font-size:20px}
+      .note{font-size:14px}
+      .contact{font-size:13px}
     }
   </style>
 </head>
 <body>
+  <!-- Bascule thème -->
+  <button class="theme-switch" id="themeBtn" aria-pressed="false" aria-label="Changer de thème">Thème : auto</button>
+
   <main class="wrap">
     <section class="card" aria-label="Annonce maintenance">
-      <!-- Logo provenant de votre ancien fichier -->
       <img src="logo1.svg" alt="TOLExperience Logo" class="logo">
       <h1><span class="L">L</span>e site est actuellement en maintenance...</h1>
       <p class="note">Nous préparons quelque chose de spécial pour vous.<br>Revenez bientôt ©!</p>
       <div class="contact">
-        <p><span class="label">Email :</span> <a href="mailto:contact@tolexperience.com">contact@tolexperience.com</a></p>
-        <p><span class="label">Téléphone :</span> <a href="tel:+33623073881">06&nbsp;23&nbsp;07&nbsp;38&nbsp;81</a></p>
+        <p><span class="label">Courriel:</span> <a href="mailto:contact@tolexperience.com">contact@tolexperience.com</a></p>
+        <p><span class="label">Téléphone:</span> <a href="tel:+33623073881">06&nbsp;23&nbsp;07&nbsp;38&nbsp;81</a></p>
       </div>
     </section>
   </main>
+
+  <script>
+    /* ====== Gestion du thème (auto / light / dark) ======
+       - Préférence stockée dans localStorage('theme') : 'auto','light','dark'
+       - Les couleurs de marque restent identiques (verrouillées en CSS) */
+    (function () {
+      const root = document.documentElement;
+      const btn  = document.getElementById('themeBtn');
+      const order = ['auto','light','dark'];
+
+      function setTheme(t){
+        root.setAttribute('data-theme', t);
+        localStorage.setItem('theme', t);
+        btn.textContent = 'Thème : ' + t;
+        btn.setAttribute('aria-pressed', t !== 'auto');
+      }
+
+      const saved = localStorage.getItem('theme') || 'auto';
+      setTheme(saved);
+
+      btn.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || 'auto';
+        const next = order[(order.indexOf(current)+1)%order.length];
+        setTheme(next);
+      });
+    })();
+  </script>
 
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
