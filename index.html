@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no">
+  <meta name="color-scheme" content="light">
   <title>TOLExperience — Site en maintenance</title>
   <style>
     /* === Polices TOL (déposez vos fichiers dans /fonts avec ces noms exacts) === */
@@ -36,7 +37,16 @@
       --muted:#c8c8c7; /* RAL 7047 Gris Clair */
     }
 
-    html,body{margin:0;padding:0;background:#fff;color:var(--grey);font-family:Arial, Helvetica, sans-serif}
+    /* Empêche l'auto-darkening/recoloration sur Android/Samsung */
+    html {
+      color-scheme: light;
+      forced-color-adjust: none;
+    }
+    body {
+      margin:0; padding:0; background:#fff; color:var(--grey);
+      font-family:Arial, Helvetica, sans-serif;
+      -webkit-text-size-adjust:100%;
+    }
     .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
     .card{max-width:980px;width:100%;text-align:center}
 
@@ -51,6 +61,7 @@
       color:var(--blue);
       font-weight:700;
       letter-spacing:.5px;
+      forced-color-adjust: none;
     }
     h1 .L{color:var(--red)} /* L majuscule en rouge */
 
@@ -61,6 +72,7 @@
       line-height:1.25;
       margin:6px 0 22px;
       color:var(--grey);
+      forced-color-adjust: none;
     }
 
     /* Coordonnées : texte en TOLArial4, labels en TOLArial3 */
@@ -68,17 +80,21 @@
       font-family:"TOLArial4", Arial, Helvetica, sans-serif;
       font-size:clamp(16px,2.1vw,22px);
       margin-top:6px;
+      forced-color-adjust: none;
     }
     .label{
       font-family:"TOLArial3", Arial, Helvetica, sans-serif;
       color:var(--grey);
       font-weight:700;
+      forced-color-adjust: none;
     }
 
     /* Liens : forcer la couleur de marque par défaut */
     a, a:link, a:visited, a:active, a:hover {
-      color: var(--blue);
+      color: var(--blue) !important;
       text-decoration: underline;
+      -webkit-text-fill-color: var(--blue);
+      forced-color-adjust: none;
     }
 
     /* ↓ Ajustements uniquement pour smartphone */
@@ -111,19 +127,15 @@
     }
 
     /* ↓ Smartphone + mode sombre : SEUL le gris s'éclaircit.
-       On fige les couleurs de marque et on neutralise le "jaune" iOS des liens tel/mail. */
-    @media (prefers-color-scheme: dark) and (max-width: 480px) and (pointer: coarse) {
-      /* Texte courant en gris clair */
+       On fige les couleurs de marque et on neutralise le "jaune" des liens. */
+    @media (prefers-color-scheme: dark) and (max-width: 480px) {
       body, .note, .contact, .label {
-        color: #c8c8c7 !important; /* RAL 7047 */
-        -webkit-text-fill-color: #c8c8c7 !important; /* iOS Safari */
+        color: #c8c8c7 !important;             /* RAL 7047 */
+        -webkit-text-fill-color: #c8c8c7 !important;
       }
-
-      /* Couleurs de marque INCHANGÉES */
       h1 { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; }
       h1 .L { color: var(--red) !important; -webkit-text-fill-color: var(--red) !important; }
 
-      /* Liens (mailto / tel) — empêcher le jaune automatique d’iOS */
       a, a:link, a:visited, a:active, a:hover,
       a[href^="mailto:"], a[href^="tel:"], a[x-apple-data-detectors] {
         color: var(--blue) !important;
@@ -131,7 +143,7 @@
         text-decoration: underline;
       }
 
-      /* Empêcher certaines recolorisations automatiques */
+      /* Re-confirme au navigateur que la page est prévue claire */
       html { color-scheme: light; }
     }
   </style>
