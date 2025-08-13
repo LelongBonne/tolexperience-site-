@@ -69,6 +69,35 @@
     }
     a{color:var(--blue);text-decoration:none}
     a:hover{text-decoration:underline}
+
+    /* ↓ Ajustements uniquement pour smartphone */
+    @media (max-width: 480px) {
+      .wrap { padding:16px; }
+      .card { max-width:92vw; }
+      .logo { max-width:220px; margin-bottom:8px; }
+      h1 {
+        font-size: clamp(16px, 6vw, 22px);
+        line-height: 1.15;
+        margin: 6px 0 10px;
+      }
+      .note {
+        font-size: clamp(12px, 4.6vw, 16px);
+        line-height: 1.22;
+        margin: 6px 0 14px;
+      }
+      .contact {
+        font-size: clamp(13px, 3.8vw, 16px);
+      }
+      .label { font-size: 1em; } /* même taille que .contact */
+    }
+
+    /* Très petits écrans (optionnel) */
+    @media (max-width: 360px) {
+      .logo { max-width:190px; }
+      h1   { font-size:20px; }
+      .note{ font-size:14px; }
+      .contact { font-size:13px; }
+    }
   </style>
 </head>
 <body>
