@@ -27,17 +27,21 @@
       font-style: normal;
       font-display: swap;
     }
+
     :root{
-      --blue:#005e83; /* RAL 5019 Bleu*/
-      --red:#a63d2f;  /* RAL 3016 Rouge*/
-      --grey:#383e42; /* RAL 7016 Gris Foncé*/
-      --muted:#c8c8c7; /* RAL 7047 Gris Clair*/
+      --blue:#005e83;  /* RAL 5019 Bleu */
+      --red:#a63d2f;   /* RAL 3016 Rouge */
+      --grey:#383e42;  /* RAL 7016 Gris Foncé */
+      --muted:#c8c8c7; /* RAL 7047 Gris Clair */
     }
+
     html,body{margin:0;padding:0;background:#fff;color:var(--grey);font-family:Arial, Helvetica, sans-serif}
     .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
     .card{max-width:980px;width:100%;text-align:center}
+
     /* Logo au-dessus du titre */
     .logo{display:block;margin:0 auto 12px auto;max-width:420px;width:90%;height:auto}
+
     /* Ligne 1 : TOLArial3 */
     h1{
       font-family:"TOLArial3", Arial, Helvetica, sans-serif;
@@ -48,6 +52,7 @@
       letter-spacing:.5px;
     }
     h1 .L{color:var(--red)} /* L majuscule en rouge */
+
     /* Ligne 2 : TOL-RV1 (plus petite) */
     .note{
       font-family:"TOL-RV1", "Comic Sans MS", "Segoe Script", cursive;
@@ -56,6 +61,7 @@
       margin:6px 0 22px;
       color:var(--grey);
     }
+
     /* Coordonnées : texte en TOLArial4, labels en TOLArial3 */
     .contact{
       font-family:"TOLArial4", Arial, Helvetica, sans-serif;
@@ -64,7 +70,7 @@
     }
     .label{
       font-family:"TOLArial3", Arial, Helvetica, sans-serif;
-      color:var(--grey); 
+      color:var(--grey);
       font-weight:700;
     }
     a{color:var(--blue);text-decoration:none}
@@ -97,6 +103,16 @@
       h1   { font-size:20px; }
       .note{ font-size:14px; }
       .contact { font-size:13px; }
+    }
+
+    /* ↓ Smartphone + mode sombre : éclaircir seulement le texte gris (pas de changement de tailles) */
+    @media (prefers-color-scheme: dark) and (max-width: 480px) and (pointer: coarse) {
+      body,
+      .note,
+      .contact,
+      .label { color: #c8c8c7 !important; } /* RAL 7047 */
+      h1 { color: var(--blue) !important; }  /* garde le titre bleu */
+      a  { color: var(--blue) !important; }  /* garde les liens bleus */
     }
   </style>
 </head>
