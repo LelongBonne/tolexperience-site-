@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
   <title>TOLExperience — Site en maintenance</title>
   <style>
     /* === Polices TOL (déposez vos fichiers dans /fonts avec ces noms exacts) === */
@@ -73,8 +74,12 @@
       color:var(--grey);
       font-weight:700;
     }
-    a{color:var(--blue);text-decoration:none}
-    a:hover{text-decoration:underline}
+
+    /* Liens : forcer la couleur de marque par défaut */
+    a, a:link, a:visited, a:active, a:hover {
+      color: var(--blue);
+      text-decoration: underline;
+    }
 
     /* ↓ Ajustements uniquement pour smartphone */
     @media (max-width: 480px) {
@@ -105,14 +110,29 @@
       .contact { font-size:13px; }
     }
 
-    /* ↓ Smartphone + mode sombre : éclaircir seulement le texte gris (pas de changement de tailles) */
+    /* ↓ Smartphone + mode sombre : SEUL le gris s'éclaircit.
+       On fige les couleurs de marque et on neutralise le "jaune" iOS des liens tel/mail. */
     @media (prefers-color-scheme: dark) and (max-width: 480px) and (pointer: coarse) {
-      body,
-      .note,
-      .contact,
-      .label { color: #c8c8c7 !important; } /* RAL 7047 */
-      h1 { color: var(--blue) !important; }  /* garde le titre bleu */
-      a  { color: var(--blue) !important; }  /* garde les liens bleus */
+      /* Texte courant en gris clair */
+      body, .note, .contact, .label {
+        color: #c8c8c7 !important; /* RAL 7047 */
+        -webkit-text-fill-color: #c8c8c7 !important; /* iOS Safari */
+      }
+
+      /* Couleurs de marque INCHANGÉES */
+      h1 { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; }
+      h1 .L { color: var(--red) !important; -webkit-text-fill-color: var(--red) !important; }
+
+      /* Liens (mailto / tel) — empêcher le jaune automatique d’iOS */
+      a, a:link, a:visited, a:active, a:hover,
+      a[href^="mailto:"], a[href^="tel:"], a[x-apple-data-detectors] {
+        color: var(--blue) !important;
+        -webkit-text-fill-color: var(--blue) !important;
+        text-decoration: underline;
+      }
+
+      /* Empêcher certaines recolorisations automatiques */
+      html { color-scheme: light; }
     }
   </style>
 </head>
