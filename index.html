@@ -3,100 +3,71 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- évite les stylisations auto des numéros de tel -->
   <meta name="format-detection" content="telephone=no">
-  <!-- indique qu’on gère nous-mêmes clair & sombre -->
   <meta name="color-scheme" content="light dark">
   <title>TOLExperience — Site en maintenance</title>
   <style>
     /* === Polices TOL (dépose tes fichiers dans /fonts) === */
-    @font-face {
-      font-family: "TOLArial3";
-      src: url("fonts/TOL-Arial3Gras-SVG.otf") format("opentype");
-      font-weight: 700; font-style: normal; font-display: swap;
-    }
-    @font-face {
-      font-family: "TOL-RV1";
-      src: url("fonts/TOLRV1.ttf") format("truetype");
-      font-weight: 400; font-style: normal; font-display: swap;
-    }
-    @font-face {
-      font-family: "TOLArial4";
-      src: url("fonts/TOL-Arial4Light.otf") format("opentype");
-      font-weight: 300; font-style: normal; font-display: swap;
-    }
+    @font-face { font-family:"TOLArial3"; src:url("fonts/TOL-Arial3Gras-SVG.otf") format("opentype"); font-weight:700; font-style:normal; font-display:swap; }
+    @font-face { font-family:"TOL-RV1";   src:url("fonts/TOLRV1.ttf")             format("truetype"); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:"TOLArial4"; src:url("fonts/TOL-Arial4Light.otf")    format("opentype"); font-weight:300; font-style:normal; font-display:swap; }
 
-    /* ====== Couleurs de marque (figées) ====== */
+    /* ===== Couleurs de marque (fixes) ===== */
     :root{
-      --brand-blue:#005e83; /* RAL 5019  ➜ NE CHANGE JAMAIS */
-      --brand-red:#a63d2f;  /* RAL 3016  ➜ NE CHANGE JAMAIS */
-
-      /* Thème clair par défaut (neutres) */
+      --brand-blue:#005e83; /* RAL 5019 */
+      --brand-red:#a63d2f;  /* RAL 3016 */
       --bg:#ffffff;
-      --text:#383e42;      /* RAL 7016 */
-      --muted:#c8c8c7;     /* RAL 7047 */
-
-      /* éléments */
+      --text:#383e42;       /* RAL 7016 */
+      --muted:#c8c8c7;      /* RAL 7047 */
       --card-max:980px;
-      --radius:18px;
     }
 
-    /* ====== Thèmes (neutres uniquement) ====== */
-    /* clair explicite */
-    [data-theme="light"]{
-      color-scheme: light;
-      --bg:#ffffff;
-      --text:#383e42;   /* gris foncé */
-    }
-    /* sombre explicite */
-    [data-theme="dark"]{
-      color-scheme: dark;
-      --bg:#0e1012;     /* fond sombre neutre */
-      --text:#c8c8c7;   /* gris clair */
-    }
-    /* auto = respecte le système, mais nos couleurs de marque restent figées */
-    @media (prefers-color-scheme: dark){
-      [data-theme="auto"]{
-        color-scheme: dark;
-        --bg:#0e1012;
-        --text:#c8c8c7;
-      }
+    [data-theme="light"]{ color-scheme:light; --bg:#ffffff; --text:#383e42; }
+    [data-theme="dark"] { color-scheme:dark;  --bg:#0e1012; --text:#c8c8c7; }
+    @media (prefers-color-scheme: dark){ [data-theme="auto"]{ color-scheme:dark; --bg:#0e1012; --text:#c8c8c7; } }
+
+    html,body{ margin:0; padding:0; background:var(--bg); color:var(--text); font-family:Arial, Helvetica, sans-serif; -webkit-text-size-adjust:100%; }
+    body, * { forced-color-adjust:none; }
+
+    .wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:28px; }
+    .card{ max-width:var(--card-max); width:100%; text-align:center; margin-inline:auto; }
+
+    /* Bloc marque = largeur du logo (pour caler les slogans) */
+    .brand-block{ display:block; margin:0 auto 18px auto; max-width:420px; width:90%; }
+    /* Logo : protections douces contre le téléchargement */
+    .logo{
+      display:block; width:100%; height:auto;
+      -webkit-user-drag:none;
+      -webkit-touch-callout:none;
+      -webkit-user-select:none; user-select:none;
+      pointer-events:none; /* empêche appui long / clic */
     }
 
-    /* ====== Reset & layout ====== */
-    html,body{
-      margin:0; padding:0;
-      background:var(--bg);
+    /* Slogans : 2 lignes fixes, alignées aux bords du logo, toujours lisibles */
+    .slogan{
+      font-family:"TOL-RV1","Comic Sans MS","Segoe Script",cursive;
+      font-size:20px;             /* taille cible (sera uniformisée via JS) */
+      line-height:1.3;            /* + espace vertical pour éviter la coupe */
+      padding:3px 0;              /* + coussin haut/bas pour éviter le troncage */
+      margin:6px 0;               /* + espace entre lignes */
       color:var(--text);
-      font-family:Arial, Helvetica, sans-serif;
-      -webkit-text-size-adjust:100%;
+      white-space:nowrap;         /* reste sur une seule ligne */
     }
-    /* Empêche les recolorisations forcées de certains navigateurs */
-    body, * { forced-color-adjust: none; }
-
-    .wrap{
-      min-height:100vh; display:flex; align-items:center; justify-content:center;
-      padding:28px;
-    }
-    .card{
-      max-width:var(--card-max); width:100%; text-align:center; margin-inline:auto;
-    }
-
-    /* Logo */
-    .logo{display:block; margin:0 auto 12px auto; max-width:420px; width:90%; height:auto}
+    .slogan.left  { text-align:left; }
+    .slogan.right { text-align:right; }
 
     /* Titre */
     h1{
       font-family:"TOLArial3", Arial, Helvetica, sans-serif;
       font-size:clamp(20px,4.6vw,40px);
-      margin:8px 0 18px;
+      margin:10px 0 18px;
       color:var(--brand-blue) !important;
       font-weight:700; letter-spacing:.5px;
       -webkit-text-fill-color:var(--brand-blue) !important;
     }
-    h1 .L{color:var(--brand-red) !important; -webkit-text-fill-color:var(--brand-red) !important;}
+    h1 .L{ color:var(--brand-red) !important; -webkit-text-fill-color:var(--brand-red) !important; }
 
-    /* Ligne manuscrite */
+    /* Ligne manuscrite d’annonce */
     .note{
       font-family:"TOL-RV1","Comic Sans MS","Segoe Script",cursive;
       font-size:clamp(10px,2.6vw,20px);
@@ -104,17 +75,10 @@
     }
 
     /* Coordonnées */
-    .contact{
-      font-family:"TOLArial4", Arial, Helvetica, sans-serif;
-      font-size:clamp(16px,2.1vw,22px);
-      margin-top:6px;
-    }
-    .label{
-      font-family:"TOLArial3", Arial, Helvetica, sans-serif;
-      color:var(--text); font-weight:700;
-    }
+    .contact{ font-family:"TOLArial4", Arial, Helvetica, sans-serif; font-size:clamp(16px,2.1vw,22px); margin-top:6px; }
+    .label{ font-family:"TOLArial3", Arial, Helvetica, sans-serif; color:var(--text); font-weight:700; }
 
-    /* Liens : BLEU de marque, figé partout */
+    /* Liens en bleu de marque */
     a,a:link,a:visited,a:active,a:hover,
     a[href^="mailto:"],a[href^="tel:"],a[x-apple-data-detectors]{
       color:var(--brand-blue) !important;
@@ -125,8 +89,7 @@
     /* Bouton thème */
     .theme-switch{
       position:fixed; top:12px; right:12px;
-      border:1px solid var(--muted);
-      background:transparent; color:var(--text);
+      border:1px solid var(--muted); background:transparent; color:var(--text);
       padding:6px 10px; border-radius:999px; cursor:pointer;
       font-family:"TOLArial4", Arial, sans-serif; font-size:14px;
     }
@@ -134,14 +97,14 @@
     /* Responsive smartphone */
     @media (max-width:480px){
       .wrap{padding:16px}
-      .logo{max-width:220px; margin-bottom:8px}
-      h1{font-size:clamp(16px,6vw,22px); line-height:1.15; margin:6px 0 10px}
+      .brand-block{max-width:220px}
+      h1{font-size:clamp(16px,6vw,22px); line-height:1.15; margin:8px 0 10px}
       .note{font-size:clamp(12px,4.6vw,16px); line-height:1.22; margin:6px 0 14px}
       .contact{font-size:clamp(13px,3.8vw,16px)}
       .label{font-size:1em}
     }
     @media (max-width:360px){
-      .logo{max-width:190px}
+      .brand-block{max-width:190px}
       h1{font-size:20px}
       .note{font-size:14px}
       .contact{font-size:13px}
@@ -154,7 +117,16 @@
 
   <main class="wrap">
     <section class="card" aria-label="Annonce maintenance">
-      <img src="logo1.svg" alt="TOLExperience Logo" class="logo">
+      <div class="brand-block" id="brandBlock">
+        <!-- Logo raster (qualité contrôlée) -->
+        <img src="logo1.webp" alt="TOLExperience Logo"
+             class="logo" id="brandLogo"
+             draggable="false" oncontextmenu="return false">
+        <!-- data-min / data-max pour contrôler la réduction auto -->
+        <p class="slogan left"  data-min="11" data-max="22" id="s1">Éprouver vos conceptions</p>
+        <p class="slogan right" data-min="11" data-max="22" id="s2">et prouver votre compétitivité</p>
+      </div>
+
       <h1><span class="L">L</span>e site est actuellement en maintenance...</h1>
       <p class="note">Nous préparons quelque chose de spécial pour vous.<br>Revenez bientôt ©!</p>
       <div class="contact">
@@ -165,30 +137,79 @@
   </main>
 
   <script>
-    /* ====== Gestion du thème (auto / light / dark) ======
-       - Préférence stockée dans localStorage('theme') : 'auto','light','dark'
-       - Les couleurs de marque restent identiques (verrouillées en CSS) */
+    /* ===== Thème (auto / light / dark) ===== */
     (function () {
       const root = document.documentElement;
       const btn  = document.getElementById('themeBtn');
       const order = ['auto','light','dark'];
-
-      function setTheme(t){
-        root.setAttribute('data-theme', t);
-        localStorage.setItem('theme', t);
-        btn.textContent = 'Thème : ' + t;
-        btn.setAttribute('aria-pressed', t !== 'auto');
-      }
-
-      const saved = localStorage.getItem('theme') || 'auto';
-      setTheme(saved);
-
+      function setTheme(t){ root.setAttribute('data-theme', t); localStorage.setItem('theme', t); btn.textContent='Thème : '+t; btn.setAttribute('aria-pressed', t!=='auto'); }
+      setTheme(localStorage.getItem('theme') || 'auto');
       btn.addEventListener('click', () => {
-        const current = root.getAttribute('data-theme') || 'auto';
-        const next = order[(order.indexOf(current)+1)%order.length];
+        const cur=root.getAttribute('data-theme')||'auto';
+        const next=order[(order.indexOf(cur)+1)%order.length];
         setTheme(next);
+        fitSlogansUniform();
       });
     })();
+
+    /* ===== Uniformiser la taille des 2 slogans, sans troncage ===== */
+    function fitSlogansUniform(){
+      const block = document.getElementById('brandBlock');
+      if (!block) return;
+      const w = Math.floor(block.clientWidth);
+      if (!w) return;
+
+      const els = [document.getElementById('s1'), document.getElementById('s2')].filter(Boolean);
+      if (!els.length) return;
+
+      // bornes communes: min = max des mins | max = min des maxs
+      const minAllowed = Math.max(...els.map(e => parseFloat(e.dataset.min || '11')));
+      const maxAllowed = Math.min(...els.map(e => parseFloat(e.dataset.max || '22')));
+
+      // partir du max commun
+      els.forEach(e => { e.style.fontSize = maxAllowed + 'px'; });
+
+      // calcule la taille nécessaire pour que chaque ligne tienne dans la largeur
+      let target = maxAllowed;
+      els.forEach(e => {
+        const sw = e.scrollWidth;
+        if (sw > w) {
+          const needed = Math.floor(maxAllowed * (w - 2) / sw); // -2px marge
+          target = Math.min(target, needed);
+        }
+      });
+
+      // clamp aux bornes
+      target = Math.max(minAllowed, Math.min(target, maxAllowed));
+
+      // applique la même taille aux deux
+      els.forEach(e => { e.style.fontSize = target + 'px'; });
+
+      // sécurité : si l’une dépasse encore, descend pas à pas (0.5px)
+      let guard = 60;
+      while (guard-- > 0 && els.some(e => e.scrollWidth > w)) {
+        target = Math.max(minAllowed, target - 0.5);
+        els.forEach(e => { e.style.fontSize = target + 'px'; });
+        if (target <= minAllowed) break;
+      }
+    }
+
+    // recalculs aux moments utiles
+    window.addEventListener('resize', fitSlogansUniform);
+    window.addEventListener('load', fitSlogansUniform);
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(fitSlogansUniform); }
+    const brandLogo = document.getElementById('brandLogo');
+    if (brandLogo) { brandLogo.addEventListener('load', fitSlogansUniform); }
+
+    // bloque context menu/drag dans la zone logo (dissuasion)
+    document.addEventListener('DOMContentLoaded', function(){
+      const bb = document.getElementById('brandBlock');
+      if (bb){
+        bb.addEventListener('contextmenu', e => e.preventDefault());
+        bb.addEventListener('dragstart',  e => e.preventDefault());
+        bb.addEventListener('mousedown',  e => { if(e.button===1) e.preventDefault(); });
+      }
+    });
   </script>
 
   <!-- Cloudflare Web Analytics -->
